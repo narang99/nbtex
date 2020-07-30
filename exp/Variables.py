@@ -80,6 +80,8 @@ def func(f, *args):
     args = makeVar(*args)
     return f.func_appl(*args)
 
+def wrap(v):
+    return Latex(addEnv(v.build()))
 
 class BinaryFunc():
     def __init__(self, mid, a1, a2):
