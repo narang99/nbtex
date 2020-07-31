@@ -4,6 +4,7 @@
 #################################################
 # file to edit: dev_nb/Functions.ipynb
 from exp.Variables import *
+from exp.helpers import varArgFunc
 
 class Sum(Var):
     def __init__(self, func, it='i', lower=None, upper=None):
@@ -13,7 +14,7 @@ class Sum(Var):
         self.lower, self.upper = lower, upper
     # non callable
     def __call__(self):
-        pass
+        raise Exception('summation is non callable')
     def build(self):
         lower = ''
         if self.lower is not None:
@@ -30,16 +31,26 @@ class Sum(Var):
 
 class Partial(Var):
     def __init__(self, wrt, degree=1):
-        super().__init__(wrt)
-        self.degree = degree
+        super().__init__('partial')
+        self.degree, self.wrt = makeVar(degree, wrt)
+    def __str__(self):
+        return f"partial wrt {self.wrt.build()} degree {self.degree.build()}"
     def build(self):
-        deg = ('^{' + makeVar(self.degree).build()) + '}' if self.degree != 1 else ''
-        return r"\frac{\partial" + deg + "}{\partial" + deg + " " + self.name + "}"
+        deg = ('^{' + self.degree.build()) + '}' if self.degree.build() != '1' else ''
+        return r"\frac{\partial" + deg + "}{\partial" + deg + r" " + self.wrt.build() + r"}"
+#         return r"\frac{\partial" + deg + "}{\partial" + deg + r" \left(" + self.wrt.build() + r"\right)}"
+
+def makePartials(*args):
+    return varArgFunc(lambda arg: Partial(*arg) if not isinstance(arg, Partial) else arg, *args)
 
 class Derivative(Var):
     def __init__(self, wrt, degree=1):
         super().__init__(wrt)
-        self.degree = degree
+        self.degree = makeVar(degree)
     def build(self):
         deg = ('^{' + makeVar(self.degree).build()) + '}' if self.degree != 1 else ''
         return r"\frac{d" + deg + "}{d" + deg + " " + self.name + "}"
+
+def makeDerivatives(*args):
+    return varArgFunc(lambda arg: (Derivative(*arg) if not isinstance(arg, Derivative)
+                                   else arg), *args)

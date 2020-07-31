@@ -4,20 +4,13 @@
 #################################################
 # file to edit: dev_nb/Variables.ipynb
 from IPython.display import Latex
-
-def makeVar(*args):
-    if len(args) == 1:
-        return Var(str(args[0])) if not isinstance(args[0], Var) else args[0]
-    vs = []
-    for arg in args:
-        vs.append(Var(str(arg))) if not isinstance(arg, Var) else vs.append(arg)
-    return vs
+from exp.helpers import varArgFunc
 
 class Var():
-    def __init__(self, name):
+    def __init__(self, name, latex=None):
         self._name = str(name)
-        self._fn = None
-        self._latex = None
+        self._fn, self._latex = None, None
+        self._isTopLevel = True
 
     @property
     def name(self): return self._name
@@ -37,7 +30,8 @@ class Var():
 
     def apply(self, f, *args):
         n = Var('temp')
-        n.back = f(*args)
+        a = makeVar(*args)
+        n.back = f(*a) if not isinstance(a,Var) else f(a)
         return n
 
     def __add__(self, other):
@@ -54,6 +48,19 @@ class Var():
         return self.apply(BinaryFunc, ' = ', self, other)
     def __or__(self, other):
         return self.apply(BinaryFunc, r'\hspace{1mm}', self, other)
+    def __lt__(self, other):
+        return self.apply(BinaryFunc, ' < ', self, other)
+    def __gt__(self, other):
+        return self.apply(BinaryFunc, ' > ', self, other)
+    def __le__(self, other):
+        return self.apply(BinaryFunc, ' \leq ', self, other)
+    def __ge__(self, other):
+        return self.apply(BinaryFunc, ' \geq ', self, other)
+
+    def __matmul__(self, other):
+        return self.equals(other)
+    def __neg__(self):
+        return self.apply(NegateFunc, self)
 
     def root(self, other):
         return self.apply(RootFunc, self, other)
@@ -61,15 +68,18 @@ class Var():
         return self.apply(FracFunc, self, other)
 
     def build(self):
-        return self.name if self._fn is None else self._fn.build()
+        if self._latex is not None: return self._latex
+        else:
+            self._latex = self.name if self._fn is None else self._fn.build()
+            return self._latex
 
     def func_appl(self, *others):
         return self.apply(FuncApplication, self, *others)
     def __call__(self, *others):
         return self.apply(FuncApplication, self, *others)
 
-def MultiVar(*args):
-    return [Var(ele) for ele in args]
+def makeVar(*args):
+    return varArgFunc(lambda arg: arg if isinstance(arg, Var) else Var(str(arg)), *args)
 
 def addEnv(s, env='gather'):
     env = '{' + env + '}'
@@ -86,7 +96,7 @@ def wrap(v):
 class BinaryFunc():
     def __init__(self, mid, a1, a2):
         self._mid = mid
-        self.a1, self.a2 = makeVar(a1, a2)
+        self.a1, self.a2 = a1, a2
     def build(self):
         if self._mid is None:
             raise Exception('middle operator string not set')
@@ -94,16 +104,22 @@ class BinaryFunc():
 
 class FracFunc():
     def __init__(self, num, den):
-        self.num, self.den = makeVar(num, den)
+        self.num, self.den = num, den
     def build(self):
         return (r"\frac{" +
                 self.num.build() + r"}{" + self.den.build() + r"}")
 class RootFunc():
     def __init__(self, num, root):
-        self.num, self.root = makeVar(num, root)
+        self.num, self.root = num, root
     def build(self):
         return(r"\sqrt[\leftroot{-1}\uproot{1}" + self.root.build()
                + r"]{" + self.num.build() + r"}")
+
+class NegateFunc():
+    def __init__(self, v):
+        self.v = v
+    def build(self):
+        return f'-{self.v.build()}'
 
 class IntegralFunc():
     def __init__(self, lower, upper, func):
@@ -113,16 +129,16 @@ class IntegralFunc():
 
 class FuncApplication():
     def __init__(self, f, *args):
-        self.f = makeVar(f)
+        self.f = f
         if len(args) == 0: self.args = None
-        else:
-            self.args = makeVar(*args)
-            if not isinstance(self.args, list): self.args = [self.args]
+        elif isinstance(args, tuple): self.args = list(args)
+        else: raise Exception('invalid type passed')
 
     def build(self):
         if self.args is None: return self.f.build() + '()'
         s = self.f.build() + '('
         for arg in self.args:
+            (arg)
             s += arg.build() + ','
         s = s[:-1]
         return s + ')'
@@ -130,6 +146,9 @@ class FuncApplication():
 class Vector(Var):
     def __init__(self, name):
         super().__init__(r"\vec{\mathbf{" + name +"}}")
+
+def makeVector(*args):
+    return varArgFunc(lambda arg: arg if isinstance(arg, Vector) else Vector(str(arg)), *args)
 
 class MatrixBuilder():
     def __init__(self):
@@ -180,6 +199,8 @@ class Matrix(Var):
     def build(self):
         env = (r'{bmatrix}' if self.surround == '[]'
                else r'{pmatrix}' if self.surround == '()'
+               else r'{vmatrix}' if self.surround == '||'
+               else r'{Vmatrix}' if (self.surround == '|| ||' or self.surround == '||||')
                else r'{matrix}')
         begin = r'\begin' + env
         end = r'\end' + env
