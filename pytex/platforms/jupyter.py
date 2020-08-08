@@ -4,3 +4,6 @@ def addEnv(s, env='gather'):
     return r'\begin' + env + str(s) + r'\end' + env
 def latex(v):
     return Latex(addEnv(v.build()))
+def platex(v):
+    l = Latex(addEnv(v.build()))
+    print(l.data)
