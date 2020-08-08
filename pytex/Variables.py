@@ -4,8 +4,30 @@
 #################################################
 # file to edit: dev_nb/Variables.ipynb
 from IPython.display import Latex
-# from exp.helpers import varArgFunc
 from pytex.helpers import varArgFunc
+
+OPERATOR = {
+    "ADD": (' + ', 1),
+    "SUB": (' - ', 1),
+    "MUL": (' * ', 2),
+    "DIV": (' ', 2),
+    "POW": ('^', 3),
+    "EQ" : (' = ', 0),
+    "NE" : (r' \neq ', 0),
+    "OR" : (r'\hspace{1mm}', 0),
+    "GT" : (' > ', 0),
+    "LT" : (' < ', 0),
+    "GE" : (r' \geq ', 0),
+    "LE" : (r' \leq ', 0),
+    "MAX": ('', 4)
+}
+def getPrec(operator):
+    if str(operator) in OPERATOR: return OPERATOR[str(operator)][1]
+    else: return OPERATOR["MAX"][1]
+
+def getMid(operator):
+    if str(operator) in OPERATOR: return OPERATOR[str(operator)][0]
+    else: return OPERATOR["MAX"][0]
 
 class Var():
     def __init__(self, name, latex=None):
@@ -36,33 +58,31 @@ class Var():
         return n
 
     def __add__(self, other):
-        return self.apply(BinaryFunc, ' + ', self, other)
+        return self.apply(BinaryFunc, 'ADD', self, other)
     def __sub__(self, other):
-        return self.apply(BinaryFunc, ' - ', self, other)
+        return self.apply(BinaryFunc, 'SUB', self, other)
     def __mul__(self, other):
-        return self.apply(BinaryFunc, ' * ', self, other)
-    def __xor__(self, other):
-        return self.apply(BinaryFunc, '^', self, other)
+        return self.apply(BinaryFunc, 'MUL', self, other)
     def __pow__(self, other):
-        return self.apply(BinaryFunc, '^', self, other)
+        return self.apply(BinaryFunc, 'POW', self, other)
     def equals(self, other):
-        return self.apply(BinaryFunc, ' = ', self, other)
+        return self.apply(BinaryFunc, 'EQ', self, other)
     def __or__(self, other):
-        return self.apply(BinaryFunc, r'\hspace{1mm}', self, other)
+        return self.apply(BinaryFunc, 'OR', self, other)
     def __lt__(self, other):
-        return self.apply(BinaryFunc, ' < ', self, other)
+        return self.apply(BinaryFunc, 'LT', self, other)
     def __gt__(self, other):
-        return self.apply(BinaryFunc, ' > ', self, other)
+        return self.apply(BinaryFunc, 'GT', self, other)
     def __le__(self, other):
-        return self.apply(BinaryFunc, ' \leq ', self, other)
+        return self.apply(BinaryFunc, 'LE', self, other)
     def __ge__(self, other):
-        return self.apply(BinaryFunc, ' \geq ', self, other)
-
-    def __matmul__(self, other):
+        return self.apply(BinaryFunc, 'GE', self, other)
+    def __eq__(self, other):
         return self.equals(other)
+    def __ne__(self, other):
+        return self.apply(BinaryFunc, 'NE', self, other)
     def __neg__(self):
         return self.apply(NegateFunc, self)
-
     def root(self, other):
         return self.apply(RootFunc, self, other)
     def __truediv__(self, other):
@@ -94,42 +114,60 @@ def func(f, *args):
 def wrap(v):
     return Latex(addEnv(v.build()))
 
-class BinaryFunc():
-    def __init__(self, mid, a1, a2):
-        self._mid = mid
-        self.a1, self.a2 = a1, a2
-    def build(self):
-        if self._mid is None:
-            raise Exception('middle operator string not set')
-        return f'{self.a1.build()}{self._mid}{self.a2.build()}'
+class BasicFunc():
+    def __init__(self, operator):
+        self.precedence = getPrec(operator)
 
-class FracFunc():
+class BinaryFunc(BasicFunc):
+    def __init__(self, mid, a1, a2):
+        super().__init__(mid)
+        self._mid = getMid(mid)
+        self.a1, self.a2 = a1, a2
+    @property
+    def mid(self):
+        return self._mid
+    def build(self):
+        if self.mid is None:
+            raise Exception('middle operator string not set')
+        a1, a2 = self.a1.build(), self.a2.build()
+        if self.a1.back is not None and self.a1.back.precedence < self.precedence:
+            a1 = '(' + a1 + ')'
+        if self.a2.back is not None and self.a2.back.precedence < self.precedence:
+            a2 = '(' + a2 + ')'
+        return f'{a1}{self.mid}{a2}'
+
+class FracFunc(BasicFunc):
     def __init__(self, num, den):
+        super().__init__('DIV')
         self.num, self.den = num, den
     def build(self):
         return (r"\frac{" +
                 self.num.build() + r"}{" + self.den.build() + r"}")
-class RootFunc():
+class RootFunc(BasicFunc):
     def __init__(self, num, root):
+        super().__init__('MAX')
         self.num, self.root = num, root
     def build(self):
         return(r"\sqrt[\leftroot{-1}\uproot{1}" + self.root.build()
                + r"]{" + self.num.build() + r"}")
 
-class NegateFunc():
+class NegateFunc(BasicFunc):
     def __init__(self, v):
+        super().__init__('MAX')
         self.v = v
     def build(self):
         return f'-{self.v.build()}'
 
-class IntegralFunc():
+class IntegralFunc(BasicFunc):
     def __init__(self, lower, upper, func):
+        super().__init__('MAX')
         self.lower, self.upper, self.func = lower, upper, func
     def build(self):
         pass
 
-class FuncApplication():
+class FuncApplication(BasicFunc):
     def __init__(self, f, *args):
+        super().__init__('MAX')
         self.f = f
         if len(args) == 0: self.args = None
         elif isinstance(args, tuple): self.args = list(args)
