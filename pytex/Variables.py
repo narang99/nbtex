@@ -4,7 +4,8 @@
 #################################################
 # file to edit: dev_nb/Variables.ipynb
 from IPython.display import Latex
-from exp.helpers import varArgFunc
+# from exp.helpers import varArgFunc
+from pytex.helpers import varArgFunc
 
 class Var():
     def __init__(self, name, latex=None):

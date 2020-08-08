@@ -1,0 +1,6 @@
+Symbols Done:
+
+1. Order Symbols
+2. Equality and inference
+3. Arrows
+4. Set

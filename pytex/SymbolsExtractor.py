@@ -23,7 +23,7 @@ def getDefs(l):
 def {name}(self):
     return Var(r'{ap}')""")
 
-from exp.Variables import wrap
+from pytex.Variables import wrap
 def getProps(cl):
     l = []
     for v in vars(cl):
