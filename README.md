@@ -4,13 +4,6 @@ A light-weight pythonic wrapper around LaTeX specifically to provide python-like
 **NOTE:** Only Jupyter Notebooks are supported for now. Tests done in notebooks too
 
 ## Usage  
-The usage is best presented by examples
-
-### Examples
-
-```python
-from pytex import makeVar, wrap
-a,b,c,d = makeVar('a','b','c','d')
-wrap(a | b | c | d)
-
-```
+The usage is best presented by examples  
+Look at the docs/Examples.ipynb for examples.  
+**NOTE:** Jupyter Notebooks uploaded on github are making the rendered latex slightly weird. The generation in a normal notebook seems to be absolutely normal
