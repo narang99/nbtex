@@ -65,22 +65,39 @@ class Var():
         return self.apply(BinaryFunc, 'MUL', self, other)
     def __pow__(self, other):
         return self.apply(BinaryFunc, 'POW', self, other)
-    def equals(self, other):
-        return self.apply(BinaryFunc, 'EQ', self, other)
     def __or__(self, other):
         return self.apply(BinaryFunc, 'OR', self, other)
+
     def __lt__(self, other):
-        return self.apply(BinaryFunc, 'LT', self, other)
+        return self.lt(other)
     def __gt__(self, other):
-        return self.apply(BinaryFunc, 'GT', self, other)
+        return self.gt(other)
     def __le__(self, other):
-        return self.apply(BinaryFunc, 'LE', self, other)
+        return self.le(other)
     def __ge__(self, other):
-        return self.apply(BinaryFunc, 'GE', self, other)
+        return self.ge(other)
     def __eq__(self, other):
-        return self.equals(other)
+        return self.eq(other)
     def __ne__(self, other):
+        return self.ne(other)
+
+    def equals(self, other):
+        return self.apply(BinaryFunc, 'EQ', self, other)
+    def not_equals(self, other):
         return self.apply(BinaryFunc, 'NE', self, other)
+    def eq(self,other):
+        return self.equals(other)
+    def ne(self,other):
+        return self.not_equals(other)
+    def lt(self, other):
+        return self.apply(BinaryFunc, 'LT', self, other)
+    def gt(self, other):
+        return self.apply(BinaryFunc, 'GT', self, other)
+    def le(self, other):
+        return self.apply(BinaryFunc, 'LE', self, other)
+    def ge(self, other):
+        return self.apply(BinaryFunc, 'GE', self, other)
+
     def __neg__(self):
         return self.apply(NegateFunc, self)
     def root(self, other):
