@@ -6,3 +6,28 @@
 def varArgFunc(func, *args):
     if len(args) == 1: return func(args[0])
     return [func(arg) for arg in args]
+
+class OverloadedBinaryOperator():
+    def __init__(self, mid, precedence):
+        self._precedence = precedence
+        self._mid = mid
+    @property
+    def precedence(self):
+        return self._precedence
+    @property
+    def mid(self):
+        return self._mid
+
+ADD = OverloadedBinaryOperator(' + ', 1)
+SUB = OverloadedBinaryOperator(' - ', 1)
+MUL = OverloadedBinaryOperator(' * ', 2)
+DIV = OverloadedBinaryOperator(' ', 2)
+POW = OverloadedBinaryOperator('^', 3)
+EQ = OverloadedBinaryOperator(' = ', 0)
+NE = OverloadedBinaryOperator(r' \neq ', 0)
+OR = OverloadedBinaryOperator(r'\hspace{1mm}', 0)
+GT = OverloadedBinaryOperator(' > ', 0)
+LT = OverloadedBinaryOperator(' < ', 0)
+GE = OverloadedBinaryOperator(r' \geq ', 0)
+LE = OverloadedBinaryOperator(r' \leq ', 0)
+MAX = OverloadedBinaryOperator('', 4)
