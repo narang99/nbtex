@@ -25,6 +25,9 @@ class OperatorSymbols():
     def eq(self):
         return '='
     @property
+    def lt(self):
+        return '<'
+    @property
     def leq(self):
         return (r'\leq')
     @property
@@ -33,6 +36,9 @@ class OperatorSymbols():
     @property
     def leqslant(self):
         return (r'\leqslant')
+    @property
+    def gt(self):
+        return '>'
     @property
     def geq(self):
         return (r'\geq')
