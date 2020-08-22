@@ -49,3 +49,16 @@ class LatexBasicFormatter:
     def root(num, nth):
         return (r"\sqrt[\leftroot{-1}\uproot{1}" + nth
                + r"]{" + num + r"}")
+
+    @staticmethod
+    def function_definition(f, *args):
+        if len(args) == 0: return f'{f}()'
+        s = ''
+        for arg in args: s += f'{arg}, '
+        s = s[:-2]
+        return f'{f}({s})'
+
+    @staticmethod
+    def inverse_function_definition(f, *args):
+        _1 = LatexBasicFormatter.surround_with_braces('-1');
+        return LatexBasicFormatter.function_definition(f'{f}^{_1}', *args)

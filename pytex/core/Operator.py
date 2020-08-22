@@ -64,3 +64,7 @@ Multiply = InvertibleOperator(PRECEDENCE.ARITHMATIC_MULT, mult_combine, frac_com
 power_combine = _infix_combine(Operator.power)
 Root = InvertibleOperator(PRECEDENCE.POWER, LatexBasicFormatter.root, power_combine)
 Power = InvertibleOperator(PRECEDENCE.POWER, power_combine, LatexBasicFormatter.root)
+
+f_combine = LatexBasicFormatter.function_definition
+inv_f_combine = LatexBasicFormatter.inverse_function_definition
+FunctionCall = InvertibleOperator(PRECEDENCE.POWER, f_combine, inv_f_combine)
