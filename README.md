@@ -5,5 +5,5 @@ A light-weight pythonic wrapper around LaTeX specifically to provide python-like
 
 ## Usage  
 The usage is best presented by examples  
-Look at the docs/Examples.ipynb for examples.  
+Look at the docs/ for examples.  
 **NOTE:** Jupyter Notebooks uploaded on github are making the rendered latex slightly weird. The generation in a normal notebook seems to be absolutely normal

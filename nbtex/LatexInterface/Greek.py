@@ -7,6 +7,9 @@ class GreekSymbols():
     def __init__(self):
         pass
     @property
+    def alpha(self):
+        return r'\alpha'
+    @property
     def beta(self):
         return (r'\beta')
     @property

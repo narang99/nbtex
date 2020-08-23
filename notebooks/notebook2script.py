@@ -4,9 +4,9 @@ import json,fire,re
 from pathlib import Path
 import io
 
-project_root = Path('/home/default/Documents/py-latex/pytex')
+project_root = Path('/home/default/Documents/py-latex/nbtex')
 notebooks_root = project_root / 'notebooks'
-lib_root = project_root / 'pytex'
+lib_root = project_root / 'nbtex'
 
 def is_export(cell):
     if cell['cell_type'] != 'code': return False

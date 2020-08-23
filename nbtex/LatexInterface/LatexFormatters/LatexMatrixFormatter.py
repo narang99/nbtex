@@ -36,7 +36,7 @@ class LatexMatrixFormatter:
 
     @staticmethod
     def subscript_of_matrix(subscript):
-        return '_{' + self.subscript + '}'
+        return '_{' + subscript + '}'
 
     @staticmethod
     def power_of_matrix(power):
