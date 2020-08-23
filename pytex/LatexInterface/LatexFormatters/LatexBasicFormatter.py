@@ -13,7 +13,7 @@ class LatexBasicFormatter:
 
     @staticmethod
     def surround_with_parens(string):
-        return f'({string})'
+        return f'\\left({string}\\right)'
 
     @staticmethod
     def negate(string):

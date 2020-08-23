@@ -28,7 +28,8 @@ class Var:
                 if self._backward_operation is None
                 else self._backward_operation.build())
 
-    def operation(self, operator, *args):
+    @staticmethod
+    def operation(operator, *args):
         operation = Operation(operator)
         args = makeVar(*args)
         if isinstance(args, list):
@@ -43,37 +44,55 @@ class Var:
         else:
             return self._backward_operation.__invert__()
 
+    def __call__(self, *args):
+        return Var.operation(Operator.FunctionCall, self, *args)
 
     def __add__(self, other):
-        return self.operation(Operator.Plus, self, other)
+        return Var.operation(Operator.Plus, self, other)
     def __sub__(self, other):
-        return self.operation(Operator.Minus, self, other)
+        return Var.operation(Operator.Minus, self, other)
     def __mul__(self, other):
-        return self.operation(Operator.Multiply, self, other)
+        return Var.operation(Operator.Multiply, self, other)
     def __pow__(self, other):
-        return self.operation(Operator.Power, self, other)
+        return Var.operation(Operator.Power, self, other)
     def __or__(self, other):
-        return self.operation(Operator.Space, self, other)
+        return Var.operation(Operator.Space, self, other)
 
     def __lt__(self, other):
-        return self.operation(Operator.LessThan, self, other)
+        return Var.operation(Operator.LessThan, self, other)
     def __gt__(self, other):
-        return self.operation(Operator.GreaterThan, self, other)
+        return Var.operation(Operator.GreaterThan, self, other)
     def __le__(self, other):
-        return self.operation(Operator.LessThanEqual, self, other)
+        return Var.operation(Operator.LessThanEqual, self, other)
     def __ge__(self, other):
-        return self.operation(Operator.GreaterThanEqual, self, other)
+        return Var.operation(Operator.GreaterThanEqual, self, other)
     def __eq__(self,other):
-        return self.operation(Operator.Equal, self, other)
+        return Var.operation(Operator.Equal, self, other)
     def __ne__(self,other):
-        return self.operation(~Operator.Equal, self, other)
+        return Var.operation(~Operator.Equal, self, other)
     def __neg__(self):
-        return self.operation(Operator.Negate, self)
+        return Var.operation(Operator.Negate, self)
     def __truediv__(self, other):
-        return self.operation(Operator.Fraction, self, other)
+        return Var.operation(Operator.Fraction, self, other)
 
     def root(self, other):
-        return self.operation(Operator.Root, self, other)
+        return Var.operation(Operator.Root, self, other)
+
+    def sum_over(self, wrt='', lower='', upper=''):
+        return Var.operation(Operator.Summation, self, wrt, lower, upper)
+    def product_over(self, wrt='', lower='', upper=''):
+        return Var.operation(Operator.Product, self, wrt, lower, upper)
+
+    def integral_over(self, wrt='', lower='', upper=''):
+        return Var.operation(Operator.Integral, self, wrt, lower, upper)
+    def differentiate(self, wrt):
+        return Var.operation(Operator.Derivative, self, wrt)
+
+    def partial_integral_over(self, wrt='', lower='', upper=''):
+        return Var.operation(Operator.PartialIntegral, self, wrt, lower, upper)
+    def partial_differentiate(self, wrt):
+        return Var.operation(Operator.PartialDerivative, self, wrt)
+
 
 def isVar(a):
     return isinstance(a, Var)

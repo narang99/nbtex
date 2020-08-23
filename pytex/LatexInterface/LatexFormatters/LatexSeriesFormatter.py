@@ -4,29 +4,32 @@
 #################################################
 # file to edit: dev_nb/LatexSeriesFormatter.ipynb
 from pytex.LatexInterface.LatexFormatters.LatexBasicFormatter import LatexBasicFormatter
+from pytex.LatexInterface.Operator import Operator
+
 class LatexSeriesFormatter():
     @staticmethod
-    def integral(func, wrt, lower=None, upper=None):
+    def integral(func, wrt, lower='', upper=''):
         func, wrt, lower, upper = LatexSeriesFormatter.preprocess_args(func, f'd{wrt}', lower, upper)
-        return f'\\int{lower}{upper}{func} {wrt}'
+        return f'\\int{lower}{upper}{func} {Operator.space} {wrt}'
 
     @staticmethod
-    def partial_integral(func, wrt, lower=None, upper=None):
-        func, wrt, lower, upper = LatexSeriesFormatter.preprocess_args(func, f'\\partial {wrt}',
-                                                                       lower, upper)
-        return f'\\int{lower}{upper}{func} {wrt}'
+    def partial_integral(func, wrt, lower='', upper=''):
+        func, wrt, lower, upper = (LatexSeriesFormatter.
+                                   preprocess_args(func, f'\\partial {wrt}',
+                                                   lower, upper))
+        return f'\\int{lower}{upper}{func} {Operator.space} {wrt}'
 
     @staticmethod
-    def summation(func, wrt, lower=None, upper=None):
-        lower = f'{wrt}={lower}' if lower is not None else wrt
+    def summation(func, wrt, lower='', upper=''):
+        lower = f'{wrt}={lower}' if lower!='' and wrt!='' else wrt
         func, _, lower, upper = LatexSeriesFormatter.preprocess_args(func, wrt, lower, upper)
         return f'\\sum{lower}{upper} {func}'
 
     @staticmethod
-    def product(func, wrt, lower=None, upper=None):
-        lower = f'{wrt}={lower}' if lower is not None else wrt
+    def product(func, wrt='', lower='', upper=''):
+        lower = f'{wrt}={lower}' if lower!='' and wrt!='' else wrt
         func, _, lower, upper = LatexSeriesFormatter.preprocess_args(func, wrt, lower, upper)
-        return f'\\prod{lower}{upper} {func}'
+        return f'\\prod{lower}{upper}  {func}'
 
     @staticmethod
     def preprocess_args(func, wrt, lower, upper):
@@ -36,11 +39,11 @@ class LatexSeriesFormatter():
 
     @staticmethod
     def format_lower_upper(lower, upper):
-        lower = LatexBasicFormatter.surround_with_braces(lower) if lower is not None else ''
-        if lower is not None:
+        lower = LatexBasicFormatter.surround_with_braces(lower) if lower!='' else ''
+        if lower!='':
             lower = LatexBasicFormatter.subscript(lower)
 
-        upper = LatexBasicFormatter.surround_with_braces(upper) if upper is not None else ''
-        if upper is not None:
+        upper = LatexBasicFormatter.surround_with_braces(upper) if upper!='' else ''
+        if upper!='':
             upper = LatexBasicFormatter.superscript(upper)
         return lower, upper

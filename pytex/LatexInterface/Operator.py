@@ -20,7 +20,7 @@ class OperatorSymbols():
         return '^'
     @property
     def space(self):
-        return ' '
+        return '\\hspace{1mm}'
     @property
     def eq(self):
         return '='

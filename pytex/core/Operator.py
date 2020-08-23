@@ -7,6 +7,7 @@ from pytex.core.Precedence import PRECEDENCE
 from pytex.LatexInterface.LatexFormatters import LatexBasicFormatter
 from pytex.LatexInterface import Operator
 from functools import partial
+from pytex.LatexInterface.LatexFormatters import LatexSeriesFormatter, LatexDerivativesFormatter
 
 class BasicOperator:
     def __init__(self, precedence, combine):
@@ -58,13 +59,37 @@ Negate = InvertibleOperator(PRECEDENCE.POWER,
 mult_combine = _infix_combine(Operator.multiply)
 frac_combine = LatexBasicFormatter.fraction
 
-Fraction = InvertibleOperator(PRECEDENCE.ARITHMATIC_MULT, frac_combine, mult_combine)
 Multiply = InvertibleOperator(PRECEDENCE.ARITHMATIC_MULT, mult_combine, frac_combine)
+Fraction = ~Multiply
 
 power_combine = _infix_combine(Operator.power)
-Root = InvertibleOperator(PRECEDENCE.POWER, LatexBasicFormatter.root, power_combine)
+
 Power = InvertibleOperator(PRECEDENCE.POWER, power_combine, LatexBasicFormatter.root)
+Root = ~Power
 
 f_combine = LatexBasicFormatter.function_definition
 inv_f_combine = LatexBasicFormatter.inverse_function_definition
+
 FunctionCall = InvertibleOperator(PRECEDENCE.POWER, f_combine, inv_f_combine)
+
+Summation = InvertibleOperator(PRECEDENCE.POWER,
+                               LatexSeriesFormatter.summation)
+
+Product = InvertibleOperator(PRECEDENCE.POWER,
+                             LatexSeriesFormatter.product)
+
+def inv_integral(function, wrt, lower='', upper=''):
+    return LatexDerivativesFormatter.derivative_of(function, wrt)
+
+Integral =  InvertibleOperator(PRECEDENCE.POWER,
+                               LatexSeriesFormatter.integral,
+                               inv_integral)
+Derivative = ~Integral
+
+def inv_partial(function, wrt, lower='', upper=''):
+    return LatexDerivativesFormatter.partial_of(function, wrt)
+
+PartialIntegral = InvertibleOperator(PRECEDENCE.POWER,
+                                     LatexSeriesFormatter.partial_integral,
+                                     inv_partial)
+PartialDerivative = ~PartialIntegral
