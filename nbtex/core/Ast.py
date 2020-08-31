@@ -93,6 +93,21 @@ class Var:
     def partial_differentiate(self, wrt):
         return Var.operation(Operator.PartialDerivative, self, wrt)
 
+    def subscript(self, subs):
+        return Var.operation(Operator.Subscript, self, subs)
+    def bold(self):
+        return self.use_operator_on_leaf(Operator.Bold)
+    def italics(self):
+        return self.use_operator_on_leaf(Operator.Italics)
+    def underline(self):
+        return self.use_operator_on_leaf(Operator.Underline)
+
+    def use_operator_on_leaf(self, operator):
+        if(self.backward_operation is None):
+            return Var.operation(operator, self)
+        else:
+            self._backward_operation = self.backward_operation.use_operator_on_leaf(operator)
+            return self
 
 def isVar(a):
     return isinstance(a, Var)
@@ -114,6 +129,11 @@ class Operation:
         return self._operator.precedence
 
     def __call__(self, *args):
+        self._args = args
+        return self
+
+    def use_operator_on_leaf(self, operator):
+        args = [arg.use_operator_on_leaf(operator) for arg in self._args]
         self._args = args
         return self
 

@@ -9,17 +9,24 @@ from nbtex.Dots import Dots
 
 
 class Matrix(Var):
-    def __init__(self, matrix=[[]], subscript=None, power=None, surround='[]'):
+    def __init__(self, matrix=[[]], surround='[]'):
         super().__init__('matrix')
         self.matrix, self.surround = matrix, surround
-        self.power = makeVar(power) if power is not None else power
-        self.subscript = makeVar(subscript) if subscript is not None else subscript
+        self.power, self.subs = None, None
 
     def __getitem__(self, ind):
         if ind  >= len(self.matrix): raise Exception('index out of bounds')
         if len(self.matrix) == 0: raise Exception('empty matrix')
         if isinstance(self.matrix[0], list): return Matrix(self.matrix[ind])
         else: return Var(self.matrix[ind])
+
+    def __pow__(self, power):
+        self.power = makeVar(power)
+        return self
+
+    def subscript(self, subs):
+        self.subs = makeVar(subs)
+        return self
 
     @staticmethod
     def builder():
@@ -30,13 +37,13 @@ class Matrix(Var):
         if len(self.matrix) == 0: return self
         rows, cols = len(self.matrix), len(self.matrix[0])
         matrix = [[self.matrix[j][i] for j in range(rows)] for i in range(cols)]
-        return Matrix(matrix, self.subscript, self.power, self.surround)
+        return Matrix(matrix, self.surround)
 
     def build(self):
         begin, end = self.create_env()
         mtx = self.get_built_base_matrix()
-        power, subscript = self.get_pow_subs()
-        return (r"" + begin + mtx + end  + power + subscript + r"")
+        power, subs = self.get_pow_subs()
+        return (r"" + begin + mtx + end  + power + subs + r"")
 
     def create_env(self):
         return LatexMatrixFormatter.create_env(self.surround)
@@ -56,11 +63,11 @@ class Matrix(Var):
         else:
             power = LatexMatrixFormatter.empty_power()
 
-        if self.subscript is not None:
-            subscript = LatexMatrixFormatter.subscript_of_matrix(self.subscript.build())
+        if self.subs is not None:
+            subs = LatexMatrixFormatter.subscript_of_matrix(self.subs.build())
         else:
-            subscript = LatexMatrixFormatter.empty_subscript()
-        return power, subscript
+            subs = LatexMatrixFormatter.empty_subscript()
+        return power, subs
 
 class MatrixBuilder():
     def __init__(self):
@@ -74,8 +81,8 @@ class MatrixBuilder():
         self.matrix.append(list(args))
         return self
 
-    def create(self, subscript=None, power=None, surround='[]'):
-        return Matrix(self.matrix, subscript, power, surround)
+    def create(self, surround='[]'):
+        return Matrix(self.matrix, surround)
 
 def hasHoriDots(elements, m):
     elerowlen = max([len(ele) for ele in elements])
@@ -85,13 +92,13 @@ def hasVertDots(elements, m):
     return not len(elements) == len(m)
 
 class MatrixWithDots(Matrix):
-    def __init__(self, elements, shape=None, subscript=None, power=None, surround='[]'):
+    def __init__(self, elements, shape=None, surround='[]'):
         # resolve elements
         self._elements_check(elements)
         self.elements= elements
         rows, cols = self._get_dimensions(elements, shape)
         matrix = self._construct_matrix(rows, cols, elements)
-        super().__init__(matrix, subscript, power, surround)
+        super().__init__(matrix, surround)
 
     def _elements_check(self, elements):
         if(not isinstance(elements, list) or len(elements) == 0
