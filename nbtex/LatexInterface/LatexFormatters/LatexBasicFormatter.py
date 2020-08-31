@@ -6,7 +6,15 @@
 class LatexBasicFormatter:
     def __init__(self):
         pass
-
+    @staticmethod
+    def bold(string):
+        return '\\textbf{' + string + '}'
+    @staticmethod
+    def italics(string):
+        return '\\textit{' + string + '}'
+    @staticmethod
+    def underline(string):
+        return '\\underline{' + string + '}'
     @staticmethod
     def binary_operation_output(binary_operator, a1, a2):
         return f'{a1} {binary_operator} {a2}'
