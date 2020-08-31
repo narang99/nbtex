@@ -15,9 +15,6 @@ class Matrix(Var):
         self.power = makeVar(power) if power is not None else power
         self.subscript = makeVar(subscript) if subscript is not None else subscript
 
-    def __len__(self):
-        return self.rows
-
     def __getitem__(self, ind):
         if ind  >= len(self.matrix): raise Exception('index out of bounds')
         if len(self.matrix) == 0: raise Exception('empty matrix')

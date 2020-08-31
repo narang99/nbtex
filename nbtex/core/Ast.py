@@ -65,15 +65,16 @@ class Var:
         return Var.operation(Operator.LessThanEqual, self, other)
     def __ge__(self, other):
         return Var.operation(Operator.GreaterThanEqual, self, other)
-    def __eq__(self,other):
-        return Var.operation(Operator.Equal, self, other)
-    def __ne__(self,other):
-        return Var.operation(~Operator.Equal, self, other)
+
     def __neg__(self):
         return Var.operation(Operator.Negate, self)
     def __truediv__(self, other):
         return Var.operation(Operator.Fraction, self, other)
 
+    def equals(self, other):
+        return Var.operation(Operator.Equal, self, other)
+    def not_equals(self, other):
+        return Var.operation(~Operator.Equal, self, other)
     def root(self, other):
         return Var.operation(Operator.Root, self, other)
 
