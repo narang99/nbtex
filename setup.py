@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="nbtex",
-    version="1.0.2",
+    version="1.0.3",
     author="Hariom Narang",
     author_email="hariom2711@gmail.com",
     packages=find_packages(),
