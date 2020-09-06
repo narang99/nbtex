@@ -3,6 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# testing in notebooks
+/notebook_tests/**
+
+# editor
+.vscode
+
 # C extensions
 *.so
 
