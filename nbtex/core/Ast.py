@@ -2,11 +2,18 @@ import nbtex.core.operators as Operator
 from nbtex.helpers import varArgFunc
 from nbtex.core.Precedence import PRECEDENCE
 from nbtex.LatexInterface import LatexBasicFormatter
+from nbtex.platforms.jupyter import latex
 
 
 class Var:
     def __init__(self, name, backward_operation=None):
         self._name, self._backward_operation = name, backward_operation
+
+    def __str__(self):
+        return self.build()
+    
+    def __repr__(self):
+        return self.__str__()
 
     @property
     def backward_operation(self):

@@ -5,22 +5,22 @@ from nbtex.LatexInterface.Operator import Operator
 class LatexSeriesFormatter:
     @staticmethod
     def integral(func, wrt, lower="", upper=""):
-        func, wrt, lower, upper = LatexSeriesFormatter.preprocess_args(
+        func, wrt, lower, upper = LatexSeriesFormatter._preprocess_args(
             func, f"d{wrt}", lower, upper
         )
-        return f"\\int{lower}{upper}{func} {Operator.space} {wrt}"
+        return f"\\int{lower}{upper} {func} {Operator.space} {wrt}"
 
     @staticmethod
     def partial_integral(func, wrt, lower="", upper=""):
-        func, wrt, lower, upper = LatexSeriesFormatter.preprocess_args(
+        func, wrt, lower, upper = LatexSeriesFormatter._preprocess_args(
             func, f"\\partial {wrt}", lower, upper
         )
-        return f"\\int{lower}{upper}{func} {Operator.space} {wrt}"
+        return f"\\int{lower}{upper} {func} {Operator.space} {wrt}"
 
     @staticmethod
-    def summation(func, wrt, lower="", upper=""):
+    def summation(func, wrt="", lower="", upper=""):
         lower = f"{wrt}={lower}" if lower != "" and wrt != "" else wrt
-        func, _, lower, upper = LatexSeriesFormatter.preprocess_args(
+        func, _, lower, upper = LatexSeriesFormatter._preprocess_args(
             func, wrt, lower, upper
         )
         return f"\\sum{lower}{upper} {func}"
@@ -28,19 +28,19 @@ class LatexSeriesFormatter:
     @staticmethod
     def product(func, wrt="", lower="", upper=""):
         lower = f"{wrt}={lower}" if lower != "" and wrt != "" else wrt
-        func, _, lower, upper = LatexSeriesFormatter.preprocess_args(
+        func, _, lower, upper = LatexSeriesFormatter._preprocess_args(
             func, wrt, lower, upper
         )
-        return f"\\prod{lower}{upper}  {func}"
+        return f"\\prod{lower}{upper} {func}"
 
     @staticmethod
-    def preprocess_args(func, wrt, lower, upper):
-        lower, upper = LatexSeriesFormatter.format_lower_upper(lower, upper)
+    def _preprocess_args(func, wrt, lower, upper):
+        lower, upper = LatexSeriesFormatter._format_lower_upper(lower, upper)
         func, wrt = LatexBasicFormatter.surround_all_with_braces(func, wrt)
         return func, wrt, lower, upper
 
     @staticmethod
-    def format_lower_upper(lower, upper):
+    def _format_lower_upper(lower, upper):
         lower = LatexBasicFormatter.surround_with_braces(lower) if lower != "" else ""
         if lower != "":
             lower = LatexBasicFormatter.subscript(lower)

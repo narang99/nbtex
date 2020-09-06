@@ -13,6 +13,7 @@ setup(
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
+        "License :: OSI Approved :: MIT License",
     ],
     description="A light-weight wrapper around LaTeX for mathematical symbols for Jupyter Notebooks",
     long_description=long_description,
