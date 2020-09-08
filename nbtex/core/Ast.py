@@ -9,9 +9,14 @@ class Var:
     def __init__(self, name, backward_operation=None):
         self._name, self._backward_operation = name, backward_operation
 
+    def clone(self):
+        if self.backward_operation is None:
+            return Var(self._name)
+        return Var(self._name, self._backward_operation.clone())
+
     def __str__(self):
         return self.build()
-    
+
     def __repr__(self):
         return self.__str__()
 
@@ -66,6 +71,9 @@ class Var:
 
     def __or__(self, other):
         return Var.operation(Operator.Space, self, other)
+
+    def __and__(self, other):
+        return Var.operation(Operator.Newline, self, other)
 
     def __lt__(self, other):
         return Var.operation(Operator.LessThan, self, other)
@@ -139,7 +147,7 @@ def isVar(a):
 
 
 def makeVar(*args):
-    return varArgFunc(lambda arg: arg if isVar(arg) else Var(str(arg)), *args)
+    return varArgFunc(lambda arg: arg.clone() if isVar(arg) else Var(str(arg)), *args)
 
 
 def addEnv(s, env="gather*"):
@@ -151,6 +159,14 @@ class Operation:
     def __init__(self, operator):
         self._operator = operator
         self._args = None
+
+    def clone(self):
+        return self
+        # NOTE: Deep Clone: This is a costly operation
+        #       Shallow cloning done for now
+        # cloned_op = Operation(self._operator)
+        # if self._args is None: return cloned_op
+        # return cloned_op(*self._args)
 
     @property
     def precedence(self):

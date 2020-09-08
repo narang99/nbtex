@@ -17,6 +17,7 @@ GreaterThanEqual = InvertibleInfixOperator(
     PRECEDENCE.COMPARE, Operator.geq, Operator.ngeq
 )
 Space = InvertibleInfixOperator(PRECEDENCE.EQUALITY, Operator.space)
+Newline = InvertibleInfixOperator(PRECEDENCE.EQUALITY, Operator.newline)
 
 Negate = InvertibleOperator(
     PRECEDENCE.POWER, LatexBasicFormatter.negate, LatexBasicFormatter.unnegate

@@ -1,170 +1,171 @@
+from nbtex.core.Ast import makeVar
 class SetSymbols:
     def __init__(self):
         pass
 
     @property
     def Subset(self):
-        return r"\Subset"
+        return makeVar(r"\Subset")
 
     @property
     def sqsubset(self):
-        return r"\sqsubset"
+        return makeVar(r"\sqsubset")
 
     @property
     def triangleleft(self):
-        return r"\triangleleft"
+        return makeVar(r"\triangleleft")
 
     @property
     def blacktriangleleft(self):
-        return r"\blacktriangleleft"
+        return makeVar(r"\blacktriangleleft")
 
     @property
     def supset(self):
-        return r"\supset"
+        return makeVar(r"\supset")
 
     @property
     def Supset(self):
-        return r"\Supset"
+        return makeVar(r"\Supset")
 
     @property
     def sqsupset(self):
-        return r"\sqsupset"
+        return makeVar(r"\sqsupset")
 
     @property
     def triangleright(self):
-        return r"\triangleright"
+        return makeVar(r"\triangleright")
 
     @property
     def blacktriangleright(self):
-        return r"\blacktriangleright"
+        return makeVar(r"\blacktriangleright")
 
     @property
     def cap(self):
-        return r"\cap"
+        return makeVar(r"\cap")
 
     @property
     def Cap(self):
-        return r"\Cap"
+        return makeVar(r"\Cap")
 
     @property
     def sqcap(self):
-        return r"\sqcap"
+        return makeVar(r"\sqcap")
 
     @property
     def vartriangle(self):
-        return r"\vartriangle"
+        return makeVar(r"\vartriangle")
 
     @property
     def blacktriangle(self):
-        return r"\blacktriangle"
+        return makeVar(r"\blacktriangle")
 
     @property
     def cup(self):
-        return r"\cup"
+        return makeVar(r"\cup")
 
     @property
     def Cup(self):
-        return r"\Cup"
+        return makeVar(r"\Cup")
 
     @property
     def sqcup(self):
-        return r"\sqcup"
+        return makeVar(r"\sqcup")
 
     @property
     def triangledown(self):
-        return r"\triangledown"
+        return makeVar(r"\triangledown")
 
     @property
     def blacktriangledown(self):
-        return r"\blacktriangledown"
+        return makeVar(r"\blacktriangledown")
 
     @property
     def In(self):
-        return r"\in"
+        return makeVar(r"\in")
 
     @property
     def subseteq(self):
-        return r"\subseteq"
+        return makeVar(r"\subseteq")
 
     @property
     def subseteqq(self):
-        return r"\subseteqq"
+        return makeVar(r"\subseteqq")
 
     @property
     def sqsubseteq(self):
-        return r"\sqsubseteq"
+        return makeVar(r"\sqsubseteq")
 
     @property
     def ni(self):
-        return r"\ni"
+        return makeVar(r"\ni")
 
     @property
     def supseteq(self):
-        return r"\supseteq"
+        return makeVar(r"\supseteq")
 
     @property
     def supseteqq(self):
-        return r"\supseteqq"
+        return makeVar(r"\supseteqq")
 
     @property
     def sqsupseteq(self):
-        return r"\sqsupseteq"
+        return makeVar(r"\sqsupseteq")
 
     @property
     def notin(self):
-        return r"\notin"
+        return makeVar(r"\notin")
 
     @property
     def nsubseteq(self):
-        return r"\nsubseteq"
+        return makeVar(r"\nsubseteq")
 
     @property
     def subsetneq(self):
-        return r"\subsetneq"
+        return makeVar(r"\subsetneq")
 
     @property
     def varsubsetneq(self):
-        return r"\varsubsetneq"
+        return makeVar(r"\varsubsetneq")
 
     @property
     def nsubseteqq(self):
-        return r"\nsubseteqq"
+        return makeVar(r"\nsubseteqq")
 
     @property
     def subsetneqq(self):
-        return r"\subsetneqq"
+        return makeVar(r"\subsetneqq")
 
     @property
     def varsubsetneqq(self):
-        return r"\varsubsetneqq"
+        return makeVar(r"\varsubsetneqq")
 
     @property
     def uplus(self):
-        return r"\uplus"
+        return makeVar(r"\uplus")
 
     @property
     def nsupseteq(self):
-        return r"\nsupseteq"
+        return makeVar(r"\nsupseteq")
 
     @property
     def supsetneq(self):
-        return r"\supsetneq"
+        return makeVar(r"\supsetneq")
 
     @property
     def varsupsetneq(self):
-        return r"\varsupsetneq"
+        return makeVar(r"\varsupsetneq")
 
     @property
     def nsupseteqq(self):
-        return r"\nsupseteqq"
+        return makeVar(r"\nsupseteqq")
 
     @property
     def supsetneqq(self):
-        return r"\supsetneqq"
+        return makeVar(r"\supsetneqq")
 
     @property
     def varsupsetneqq(self):
-        return r"\varsupsetneqq"
+        return makeVar(r"\varsupsetneqq")
 
 
 Set = SetSymbols()

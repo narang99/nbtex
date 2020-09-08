@@ -14,3 +14,6 @@ class Dots(Var):
             if (self.direc == "v")
             else r"\ddots"
         )
+
+    def clone(self):
+        return Dots(self.direc)

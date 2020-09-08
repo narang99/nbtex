@@ -1,262 +1,263 @@
+from nbtex.core.Ast import makeVar
 class ArrowsSymbols:
     def __init__(self):
         pass
 
     @property
     def Leftarrow(self):
-        return r"\Leftarrow"
+        return makeVar(r"\Leftarrow")
 
     @property
     def leftharpoonup(self):
-        return r"\leftharpoonup"
+        return makeVar(r"\leftharpoonup")
 
     @property
     def leftharpoondown(self):
-        return r"\leftharpoondown"
+        return makeVar(r"\leftharpoondown")
 
     @property
     def leftleftarrows(self):
-        return r"\leftleftarrows"
+        return makeVar(r"\leftleftarrows")
 
     @property
     def rightarrow(self):
-        return r"\rightarrow"
+        return makeVar(r"\rightarrow")
 
     @property
     def Rightarrow(self):
-        return r"\Rightarrow"
+        return makeVar(r"\Rightarrow")
 
     @property
     def rightharpoonup(self):
-        return r"\rightharpoonup"
+        return makeVar(r"\rightharpoonup")
 
     @property
     def rightharpoondown(self):
-        return r"\rightharpoondown"
+        return makeVar(r"\rightharpoondown")
 
     @property
     def rightrightarrows(self):
-        return r"\rightrightarrows"
+        return makeVar(r"\rightrightarrows")
 
     @property
     def uparrow(self):
-        return r"\uparrow"
+        return makeVar(r"\uparrow")
 
     @property
     def Uparrow(self):
-        return r"\Uparrow"
+        return makeVar(r"\Uparrow")
 
     @property
     def upharpoonleft(self):
-        return r"\upharpoonleft"
+        return makeVar(r"\upharpoonleft")
 
     @property
     def upharpoonright(self):
-        return r"\upharpoonright"
+        return makeVar(r"\upharpoonright")
 
     @property
     def upuparrows(self):
-        return r"\upuparrows"
+        return makeVar(r"\upuparrows")
 
     @property
     def downarrow(self):
-        return r"\downarrow"
+        return makeVar(r"\downarrow")
 
     @property
     def Downarrow(self):
-        return r"\Downarrow"
+        return makeVar(r"\Downarrow")
 
     @property
     def downharpoonleft(self):
-        return r"\downharpoonleft"
+        return makeVar(r"\downharpoonleft")
 
     @property
     def downharpoonright(self):
-        return r"\downharpoonright"
+        return makeVar(r"\downharpoonright")
 
     @property
     def downdownarrows(self):
-        return r"\downdownarrows"
+        return makeVar(r"\downdownarrows")
 
     @property
     def longleftarrow(self):
-        return r"\longleftarrow"
+        return makeVar(r"\longleftarrow")
 
     @property
     def Longleftarrow(self):
-        return r"\Longleftarrow"
+        return makeVar(r"\Longleftarrow")
 
     @property
     def hookleftarrow(self):
-        return r"\hookleftarrow"
+        return makeVar(r"\hookleftarrow")
 
     @property
     def leftrightharpoons(self):
-        return r"\leftrightharpoons"
+        return makeVar(r"\leftrightharpoons")
 
     @property
     def leftrightarrows(self):
-        return r"\leftrightarrows"
+        return makeVar(r"\leftrightarrows")
 
     @property
     def Lleftarrow(self):
-        return r"\Lleftarrow"
+        return makeVar(r"\Lleftarrow")
 
     @property
     def Lsh(self):
-        return r"\Lsh"
+        return makeVar(r"\Lsh")
 
     @property
     def leftarrowtail(self):
-        return r"\leftarrowtail"
+        return makeVar(r"\leftarrowtail")
 
     @property
     def twoheadleftarrow(self):
-        return r"\twoheadleftarrow"
+        return makeVar(r"\twoheadleftarrow")
 
     @property
     def curvearrowleft(self):
-        return r"\curvearrowleft"
+        return makeVar(r"\curvearrowleft")
 
     @property
     def circlearrowleft(self):
-        return r"\circlearrowleft"
+        return makeVar(r"\circlearrowleft")
 
     @property
     def looparrowleft(self):
-        return r"\looparrowleft"
+        return makeVar(r"\looparrowleft")
 
     @property
     def longrightarrow(self):
-        return r"\longrightarrow"
+        return makeVar(r"\longrightarrow")
 
     @property
     def Longrightarrow(self):
-        return r"\Longrightarrow"
+        return makeVar(r"\Longrightarrow")
 
     @property
     def hookrightarrow(self):
-        return r"\hookrightarrow"
+        return makeVar(r"\hookrightarrow")
 
     @property
     def rightleftharpoons(self):
-        return r"\rightleftharpoons"
+        return makeVar(r"\rightleftharpoons")
 
     @property
     def rightleftarrows(self):
-        return r"\rightleftarrows"
+        return makeVar(r"\rightleftarrows")
 
     @property
     def Rrightarrow(self):
-        return r"\Rrightarrow"
+        return makeVar(r"\Rrightarrow")
 
     @property
     def Rsh(self):
-        return r"\Rsh"
+        return makeVar(r"\Rsh")
 
     @property
     def rightarrowtail(self):
-        return r"\rightarrowtail"
+        return makeVar(r"\rightarrowtail")
 
     @property
     def twoheadrightarrow(self):
-        return r"\twoheadrightarrow"
+        return makeVar(r"\twoheadrightarrow")
 
     @property
     def curvearrowright(self):
-        return r"\curvearrowright"
+        return makeVar(r"\curvearrowright")
 
     @property
     def circlearrowright(self):
-        return r"\circlearrowright"
+        return makeVar(r"\circlearrowright")
 
     @property
     def looparrowright(self):
-        return r"\looparrowright"
+        return makeVar(r"\looparrowright")
 
     @property
     def leftrightarrow(self):
-        return r"\leftrightarrow"
+        return makeVar(r"\leftrightarrow")
 
     @property
     def longleftrightarrow(self):
-        return r"\longleftrightarrow"
+        return makeVar(r"\longleftrightarrow")
 
     @property
     def updownarrow(self):
-        return r"\updownarrow"
+        return makeVar(r"\updownarrow")
 
     @property
     def nleftarrow(self):
-        return r"\nleftarrow"
+        return makeVar(r"\nleftarrow")
 
     @property
     def nrightarrow(self):
-        return r"\nrightarrow"
+        return makeVar(r"\nrightarrow")
 
     @property
     def nleftrightarrow(self):
-        return r"\nleftrightarrow"
+        return makeVar(r"\nleftrightarrow")
 
     @property
     def Leftrightarrow(self):
-        return r"\Leftrightarrow"
+        return makeVar(r"\Leftrightarrow")
 
     @property
     def Longleftrightarrow(self):
-        return r"\Longleftrightarrow"
+        return makeVar(r"\Longleftrightarrow")
 
     @property
     def Updownarrow(self):
-        return r"\Updownarrow"
+        return makeVar(r"\Updownarrow")
 
     @property
     def nLeftarrow(self):
-        return r"\nLeftarrow"
+        return makeVar(r"\nLeftarrow")
 
     @property
     def nRightarrow(self):
-        return r"\nRightarrow"
+        return makeVar(r"\nRightarrow")
 
     @property
     def nLeftrightarrow(self):
-        return r"\nLeftrightarrow"
+        return makeVar(r"\nLeftrightarrow")
 
     @property
     def mapsto(self):
-        return r"\mapsto"
+        return makeVar(r"\mapsto")
 
     @property
     def longmapsto(self):
-        return r"\longmapsto"
+        return makeVar(r"\longmapsto")
 
     @property
     def multimap(self):
-        return r"\multimap"
+        return makeVar(r"\multimap")
 
     @property
     def rightsquigarrow(self):
-        return r"\rightsquigarrow"
+        return makeVar(r"\rightsquigarrow")
 
     @property
     def leftrightsquigarrow(self):
-        return r"\leftrightsquigarrow"
+        return makeVar(r"\leftrightsquigarrow")
 
     @property
     def swarrow(self):
-        return r"\swarrow"
+        return makeVar(r"\swarrow")
 
     @property
     def searrow(self):
-        return r"\searrow"
+        return makeVar(r"\searrow")
 
     @property
     def nwarrow(self):
-        return r"\nwarrow"
+        return makeVar(r"\nwarrow")
 
     @property
     def nearrow(self):
-        return r"\nearrow"
+        return makeVar(r"\nearrow")
 
 
 Arrow = ArrowsSymbols()

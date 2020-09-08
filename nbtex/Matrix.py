@@ -1,13 +1,22 @@
-from nbtex.core.Ast import Var, makeVar
+from nbtex.core.Ast import Var, makeVar, isVar
 from nbtex.LatexInterface.LatexFormatters import LatexMatrixFormatter
 from nbtex.Dots import Dots
-
 
 class Matrix(Var):
     def __init__(self, matrix=[[]], surround="[]"):
         super().__init__("matrix")
         self.matrix, self.surround = matrix, surround
         self.power, self.subs = None, None
+    
+    def clone(self):
+        new_mtx = [[0]*len(self.matrix[0])]*len(self.matrix)
+        for i in range(len(self.matrix)):
+            for j in range(len(self.matrix[i])):
+                if isVar(self.matrix[i][j]):
+                    new_mtx[i][j] = self.matrix[i][j].clone()
+                else:
+                    new_mtx[i][j] = self.matrix[i][j]
+
 
     def __getitem__(self, ind):
         if ind >= len(self.matrix):
@@ -42,6 +51,7 @@ class Matrix(Var):
     def build(self):
         begin, end = self.create_env()
         mtx = self.get_built_base_matrix()
+        # print(mtx)
         power, subs = self.get_pow_subs()
         return r"" + begin + mtx + end + power + subs + r""
 
@@ -147,11 +157,25 @@ class MatrixWithDots(Matrix):
             i += 1
         return i
 
+    def _get_row_with_elements(self, elements, row_index, mlen):
+        row = elements[row_index]
+        new_row = [0] * mlen
+        j = 0
+        while j < len(row) - 1:
+            new_row[j] = row[j]
+            j += 1
+        while j < mlen - 1:
+            new_row[j] = Dots("h")
+            j += 1
+        new_row[j] = row[len(row) - 1]
+        return new_row
+
     def _fill_with_vertical_dots(self, start, elements, m):
         i = start
         while i < len(m) - 1:
             m[i] = [Dots("v")] * len(m[i])
             i += 1
+        
         return i
 
     def _fill_last_row_with_elements(self, elements, m):
@@ -168,19 +192,6 @@ class MatrixWithDots(Matrix):
         ):
 
             m[dli][dlj] = Dots("d")
-
-    def _get_row_with_elements(self, elements, row_index, mlen):
-        row = elements[row_index]
-        new_row = [0] * mlen
-        j = 0
-        while j < len(row) - 1:
-            new_row[j] = row[j]
-            j += 1
-        while j < mlen - 1:
-            new_row[j] = Dots("h")
-            j += 1
-        new_row[j] = row[len(row) - 1]
-        return new_row
 
     @property
     def T(self):
