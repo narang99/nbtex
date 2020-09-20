@@ -16,7 +16,7 @@ class Matrix(Var):
                     new_mtx[i][j] = self.matrix[i][j].clone()
                 else:
                     new_mtx[i][j] = self.matrix[i][j]
-
+        return Matrix(new_mtx, self.surround)
 
     def __getitem__(self, ind):
         if ind >= len(self.matrix):

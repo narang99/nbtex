@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "/home/default/anaconda3/envs/nbtex2/bin/python",
+  "python.pythonPath": "/home/default/anaconda3/envs/nbtex_env/bin/python",
   "python.testing.unittestArgs":[
     "-v",
     "-s",
