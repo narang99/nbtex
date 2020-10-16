@@ -8,6 +8,10 @@ A light-weight pythonic wrapper around LaTeX specifically to python-like interfa
 A lot of us in data science extensively use notebooks and sometimes have to write some latex in markdown. Most of us are not familiar with LaTeX. Therefore instead of going on a hunt for LaTeX on the internet, you can use this library for writing LaTeX in a pythonic manner.   
 **NOTE:** We only support Math LaTeX because Jupyter Notebook users normally do other stuff in normal markdown and not in LaTeX.
 
+## Installation
+
+`pip install nbtex`
+
 ## Features
 
 You can create latex for:
